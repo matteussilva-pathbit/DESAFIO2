@@ -54,3 +54,4 @@ C:\Users\OBERDAN\Desktop\DESAFIO2\EmailWorker\obj\Debug\net9.0\refint\EmailWorke
 C:\Users\OBERDAN\Desktop\DESAFIO2\EmailWorker\obj\Debug\net9.0\EmailWorker.pdb
 C:\Users\OBERDAN\Desktop\DESAFIO2\EmailWorker\obj\Debug\net9.0\EmailWorker.genruntimeconfig.cache
 C:\Users\OBERDAN\Desktop\DESAFIO2\EmailWorker\obj\Debug\net9.0\ref\EmailWorker.dll
+C:\Users\OBERDAN\Desktop\DESAFIO2\EmailWorker\obj\Debug\net9.0\EmailWorker.sourcelink.json

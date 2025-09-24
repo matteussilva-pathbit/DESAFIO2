@@ -112,3 +112,4 @@ C:\Users\OBERDAN\Desktop\DESAFIO2\Web\obj\Debug\net9.0\refint\Web.dll
 C:\Users\OBERDAN\Desktop\DESAFIO2\Web\obj\Debug\net9.0\Web.pdb
 C:\Users\OBERDAN\Desktop\DESAFIO2\Web\obj\Debug\net9.0\Web.genruntimeconfig.cache
 C:\Users\OBERDAN\Desktop\DESAFIO2\Web\obj\Debug\net9.0\ref\Web.dll
+C:\Users\OBERDAN\Desktop\DESAFIO2\Web\obj\Debug\net9.0\Web.sourcelink.json

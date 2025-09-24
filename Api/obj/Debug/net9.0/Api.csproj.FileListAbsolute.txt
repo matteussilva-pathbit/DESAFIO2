@@ -44,3 +44,4 @@ C:\Users\OBERDAN\Desktop\DESAFIO2\Api\obj\Debug\net9.0\refint\Api.dll
 C:\Users\OBERDAN\Desktop\DESAFIO2\Api\obj\Debug\net9.0\Api.pdb
 C:\Users\OBERDAN\Desktop\DESAFIO2\Api\obj\Debug\net9.0\Api.genruntimeconfig.cache
 C:\Users\OBERDAN\Desktop\DESAFIO2\Api\obj\Debug\net9.0\ref\Api.dll
+C:\Users\OBERDAN\Desktop\DESAFIO2\Api\obj\Debug\net9.0\Api.sourcelink.json

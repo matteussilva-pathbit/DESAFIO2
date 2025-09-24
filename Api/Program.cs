@@ -3,6 +3,7 @@ using DESAFIO2.Api.Services;
 using DESAFIO2.Api.Infra;
 using FluentValidation;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Configurações
@@ -13,6 +14,7 @@ builder.Services.AddSingleton<MongoContext>();
 builder.Services.AddSingleton<RabbitService>();
 builder.Services.AddHttpClient<ViaCepService>();
 builder.Services.AddScoped<IValidator<ClienteCadastro>, ClienteCadastroValidator>();
+
 
 // Controllers + Swagger
 builder.Services.AddControllers();
