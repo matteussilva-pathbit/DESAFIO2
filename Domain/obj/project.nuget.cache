@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "V3ZaY9T5Adk=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\OBERDAN\\Desktop\\DESAFIO2\\Domain\\Domain.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\OBERDAN\\.nuget\\packages\\fluentvalidation\\12.0.0\\fluentvalidation.12.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
