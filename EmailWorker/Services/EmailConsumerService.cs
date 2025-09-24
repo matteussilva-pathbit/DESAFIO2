@@ -1,4 +1,3 @@
-// EmailWorker/Services/EmailConsumerService.cs
 using System.Text;
 using System.Text.Json;
 using DESAFIO2.Domain;
@@ -34,49 +33,84 @@ public class EmailConsumerService : BackgroundService
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        var factory = new ConnectionFactory
+        // 0) Logs de configuração
+        _log.LogInformation("Iniciando EmailWorker. Queue={Queue} Host={Host} Uri={Uri} DryRun={DryRun}",
+            _rabbit.Queue, _rabbit.HostName, _rabbit.Uri, _email.DryRun);
+
+        // 1) Conectar ao RabbitMQ com retry/backoff
+        var factory = new ConnectionFactory();
+        if (!string.IsNullOrWhiteSpace(_rabbit.Uri))
         {
-            HostName = _rabbit.HostName,
-            UserName = _rabbit.UserName,
-            Password = _rabbit.Password
-        };
+            factory.Uri = new Uri(_rabbit.Uri);
+        }
+        else
+        {
+            factory.HostName = _rabbit.HostName;
+            factory.UserName = _rabbit.UserName;
+            factory.Password = _rabbit.Password;
+        }
 
-        // *** IMPORTANTE: use o parâmetro nomeado 'cancellationToken' ***
-        _conn = await factory.CreateConnectionAsync(cancellationToken: stoppingToken);
-        _ch   = await _conn.CreateChannelAsync(cancellationToken: stoppingToken);
+        var attempt = 0;
+        while (!stoppingToken.IsCancellationRequested)
+        {
+            try
+            {
+                attempt++;
+                _conn = await factory.CreateConnectionAsync(cancellationToken: stoppingToken);
+                _ch   = await _conn.CreateChannelAsync(cancellationToken: stoppingToken);
 
-        await _ch.QueueDeclareAsync(
-            queue: _rabbit.Queue,
-            durable: true,
-            exclusive: false,
-            autoDelete: false,
-            arguments: null,
-            cancellationToken: stoppingToken);
+                await _ch.QueueDeclareAsync(
+                    queue: _rabbit.Queue,
+                    durable: true,
+                    exclusive: false,
+                    autoDelete: false,
+                    arguments: null,
+                    cancellationToken: stoppingToken);
 
+                _log.LogInformation("Conectado ao RabbitMQ e fila declarada '{Queue}'.", _rabbit.Queue);
+                break; // sucesso
+            }
+            catch (Exception ex)
+            {
+                var delay = TimeSpan.FromSeconds(Math.Min(30, Math.Pow(2, attempt)));
+                _log.LogError(ex, "Falha ao conectar no RabbitMQ (tentativa {Attempt}). Tentando novamente em {Delay}s...",
+                    attempt, delay.TotalSeconds);
+                await Task.Delay(delay, stoppingToken);
+            }
+        }
+
+        if (_ch is null)
+        {
+            _log.LogCritical("Não foi possível estabelecer canal com o RabbitMQ. Encerrando worker.");
+            return;
+        }
+
+        // 2) Consumidor assíncrono
         var consumer = new AsyncEventingBasicConsumer(_ch);
 
-        // *** IMPORTANTE: o handler Recebe DOIS parâmetros: (_, ea) ***
         consumer.ReceivedAsync += async (_, ea) =>
         {
             try
             {
                 var json = Encoding.UTF8.GetString(ea.Body.ToArray());
-                var msg  = JsonSerializer.Deserialize<EmailFilaMsg>(json)!;
+                var msg  = JsonSerializer.Deserialize<EmailFilaMsg>(json);
+                if (msg is null) throw new InvalidOperationException("Mensagem inválida (JSON nulo).");
 
+                // 3) Envio de e-mail
                 await EnviarEmailAsync(msg.Nome, msg.Email, stoppingToken);
 
-                await _ch!.BasicAckAsync(
+                await _ch.BasicAckAsync(
                     deliveryTag: ea.DeliveryTag,
                     multiple: false,
                     cancellationToken: stoppingToken);
             }
             catch (Exception ex)
             {
-                _log.LogError(ex, "Falha ao processar mensagem");
+                _log.LogError(ex, "Erro ao processar mensagem. Nack (requeue=false).");
                 await _ch!.BasicNackAsync(
                     deliveryTag: ea.DeliveryTag,
                     multiple: false,
-                    requeue: true,
+                    requeue: false, // evita loop infinito se a mensagem estiver envenenada
                     cancellationToken: stoppingToken);
             }
         };
@@ -87,11 +121,20 @@ public class EmailConsumerService : BackgroundService
             consumer: consumer,
             cancellationToken: stoppingToken);
 
-        _log.LogInformation("EmailWorker iniciado. Aguardando mensagens…");
+        _log.LogInformation("EmailWorker pronto. Aguardando mensagens…");
+
+        // 4) Mantém o worker vivo até o cancelamento
+        try
+        {
+            while (!stoppingToken.IsCancellationRequested)
+                await Task.Delay(1000, stoppingToken);
+        }
+        catch (OperationCanceledException) { /* esperado no shutdown */ }
     }
 
     public override async Task StopAsync(CancellationToken cancellationToken)
     {
+        _log.LogInformation("Parando EmailWorker…");
         if (_ch is not null)  await _ch.DisposeAsync();
         if (_conn is not null) await _conn.DisposeAsync();
         await base.StopAsync(cancellationToken);
@@ -99,9 +142,15 @@ public class EmailConsumerService : BackgroundService
 
     private async Task EnviarEmailAsync(string nome, string email, CancellationToken ct)
     {
+        if (_email.DryRun)
+        {
+            _log.LogWarning("DryRun=TRUE → simulando envio de e-mail para {Email} (não chamando SendGrid).", email);
+            return;
+        }
+
         var apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
         if (string.IsNullOrWhiteSpace(apiKey))
-            throw new InvalidOperationException("SENDGRID_API_KEY não configurada.");
+            throw new InvalidOperationException("SENDGRID_API_KEY não configurada. Defina a variável de ambiente ou ative Email.DryRun=true.");
 
         var client  = new SendGridClient(apiKey);
         var from    = new EmailAddress(_email.FromAddress, _email.FromName);
@@ -109,8 +158,10 @@ public class EmailConsumerService : BackgroundService
         var subject = "Seu cadastro está em análise";
         var plain   = $"Olá {nome},\n\nO seu cadastro está em análise e em breve você receberá um e-mail com novas atualizações sobre seu cadastro.\n\nAtenciosamente,\nEquipe PATHBIT";
 
-        var msg  = MailHelper.CreateSingleEmail(from, to, subject, plain, null);
-        var resp = await client.SendEmailAsync(msg, ct);
-        _log.LogInformation("Email enviado para {Email} - Status: {StatusCode}", email, resp.StatusCode);
+        var msg   = MailHelper.CreateSingleEmail(from, to, subject, plain, null);
+        var resp  = await client.SendEmailAsync(msg, ct);
+        var body  = await resp.Body.ReadAsStringAsync();
+
+        _log.LogInformation("SendGrid Status: {Status} Body: {Body}", resp.StatusCode, body);
     }
 }
