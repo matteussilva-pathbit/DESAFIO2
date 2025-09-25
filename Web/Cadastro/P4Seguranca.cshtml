@@ -1,0 +1,38 @@
+@page "/Cadastro/P4Seguranca"
+@model DESAFIO2.Web.Cadastro.P4SegurancaModel
+
+<h2>Segurança</h2>
+
+<form method="post" onsubmit="return checkPasswords()">
+  <label>Senha
+    <input type="password" id="senha" name="Senha" value="@Model.Senha" minlength="6" required />
+  </label>
+
+  <label>Confirmar Senha
+    <input type="password" id="confirmacao" name="ConfirmacaoSenha" value="@Model.ConfirmacaoSenha" minlength="6" required />
+  </label>
+
+  <div class="actions">
+    <button type="submit">Concluir</button>
+    <a href="/Cadastro/P3Endereco">Voltar</a>
+  </div>
+
+  @if (!string.IsNullOrWhiteSpace(Model.Erro))
+  {
+    <p class="error">@Model.Erro</p>
+  }
+</form>
+
+@section Scripts {
+<script>
+function checkPasswords(){
+  const s = document.getElementById('senha').value || '';
+  const c = document.getElementById('confirmacao').value || '';
+  if (s !== c) {
+    alert('A confirmação deve ser igual à senha.');
+    return false; // cancela submit
+  }
+  return true;
+}
+</script>
+}

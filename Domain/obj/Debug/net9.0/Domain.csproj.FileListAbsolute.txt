@@ -6,8 +6,8 @@ C:\Users\OBERDAN\Desktop\DESAFIO2\Domain\obj\Debug\net9.0\Domain.GeneratedMSBuil
 C:\Users\OBERDAN\Desktop\DESAFIO2\Domain\obj\Debug\net9.0\Domain.AssemblyInfoInputs.cache
 C:\Users\OBERDAN\Desktop\DESAFIO2\Domain\obj\Debug\net9.0\Domain.AssemblyInfo.cs
 C:\Users\OBERDAN\Desktop\DESAFIO2\Domain\obj\Debug\net9.0\Domain.csproj.CoreCompileInputs.cache
+C:\Users\OBERDAN\Desktop\DESAFIO2\Domain\obj\Debug\net9.0\Domain.sourcelink.json
 C:\Users\OBERDAN\Desktop\DESAFIO2\Domain\obj\Debug\net9.0\Domain.dll
 C:\Users\OBERDAN\Desktop\DESAFIO2\Domain\obj\Debug\net9.0\refint\Domain.dll
 C:\Users\OBERDAN\Desktop\DESAFIO2\Domain\obj\Debug\net9.0\Domain.pdb
 C:\Users\OBERDAN\Desktop\DESAFIO2\Domain\obj\Debug\net9.0\ref\Domain.dll
-C:\Users\OBERDAN\Desktop\DESAFIO2\Domain\obj\Debug\net9.0\Domain.sourcelink.json

@@ -1,0 +1,50 @@
+@page "/Cadastro/P1Basicos"
+@model DESAFIO2.Web.Cadastro.P1BasicosModel
+
+<h2>Dados básicos</h2>
+
+<form method="post">
+  <label>Nome
+    <input name="Nome" required />
+  </label>
+
+  <label>Data de nascimento
+    <input type="date" name="DataNascimento" required />
+  </label>
+
+  <label>CPF
+    <input name="Cpf" required onchange="onCpfChange(this)" />
+  </label>
+
+  <label>Email
+    <input type="email" name="Email" required />
+  </label>
+
+  <label>Telefone
+    <input name="Telefone" required onchange="onTelChange(this)" />
+  </label>
+
+  <div class="actions">
+    <button type="submit">Próximo</button>
+  </div>
+</form>
+
+@section Scripts {
+<script>
+// util: só dígitos
+function onlyDigits(input) {
+  input.value = (input.value || '').replace(/\D/g,'');
+}
+// CPF: 11 dígitos
+function onCpfChange(el) {
+  onlyDigits(el);
+  el.setCustomValidity(el.value.length === 11 ? '' : 'CPF deve ter 11 dígitos');
+}
+// Telefone: 10 a 11 dígitos
+function onTelChange(el) {
+  onlyDigits(el);
+  const ok = el.value.length >= 10 && el.value.length <= 11;
+  el.setCustomValidity(ok ? '' : 'Telefone deve ter 10 ou 11 dígitos');
+}
+</script>
+}

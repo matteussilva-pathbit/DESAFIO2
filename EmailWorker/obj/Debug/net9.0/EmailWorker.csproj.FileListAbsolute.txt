@@ -48,10 +48,10 @@ C:\Users\OBERDAN\Desktop\DESAFIO2\EmailWorker\obj\Debug\net9.0\EmailWorker.Gener
 C:\Users\OBERDAN\Desktop\DESAFIO2\EmailWorker\obj\Debug\net9.0\EmailWorker.AssemblyInfoInputs.cache
 C:\Users\OBERDAN\Desktop\DESAFIO2\EmailWorker\obj\Debug\net9.0\EmailWorker.AssemblyInfo.cs
 C:\Users\OBERDAN\Desktop\DESAFIO2\EmailWorker\obj\Debug\net9.0\EmailWorker.csproj.CoreCompileInputs.cache
+C:\Users\OBERDAN\Desktop\DESAFIO2\EmailWorker\obj\Debug\net9.0\EmailWorker.sourcelink.json
 C:\Users\OBERDAN\Desktop\DESAFIO2\EmailWorker\obj\Debug\net9.0\EmailWor.8008F920.Up2Date
 C:\Users\OBERDAN\Desktop\DESAFIO2\EmailWorker\obj\Debug\net9.0\EmailWorker.dll
 C:\Users\OBERDAN\Desktop\DESAFIO2\EmailWorker\obj\Debug\net9.0\refint\EmailWorker.dll
 C:\Users\OBERDAN\Desktop\DESAFIO2\EmailWorker\obj\Debug\net9.0\EmailWorker.pdb
 C:\Users\OBERDAN\Desktop\DESAFIO2\EmailWorker\obj\Debug\net9.0\EmailWorker.genruntimeconfig.cache
 C:\Users\OBERDAN\Desktop\DESAFIO2\EmailWorker\obj\Debug\net9.0\ref\EmailWorker.dll
-C:\Users\OBERDAN\Desktop\DESAFIO2\EmailWorker\obj\Debug\net9.0\EmailWorker.sourcelink.json

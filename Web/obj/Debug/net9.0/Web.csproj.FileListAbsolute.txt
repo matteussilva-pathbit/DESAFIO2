@@ -32,13 +32,14 @@ C:\Users\OBERDAN\Desktop\DESAFIO2\Web\obj\Debug\net9.0\Web.csproj.CoreCompileInp
 C:\Users\OBERDAN\Desktop\DESAFIO2\Web\obj\Debug\net9.0\Web.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\OBERDAN\Desktop\DESAFIO2\Web\obj\Debug\net9.0\Web.RazorAssemblyInfo.cache
 C:\Users\OBERDAN\Desktop\DESAFIO2\Web\obj\Debug\net9.0\Web.RazorAssemblyInfo.cs
+C:\Users\OBERDAN\Desktop\DESAFIO2\Web\obj\Debug\net9.0\Web.sourcelink.json
 C:\Users\OBERDAN\Desktop\DESAFIO2\Web\obj\Debug\net9.0\rjimswa.dswa.cache.json
 C:\Users\OBERDAN\Desktop\DESAFIO2\Web\obj\Debug\net9.0\rjsmrazor.dswa.cache.json
 C:\Users\OBERDAN\Desktop\DESAFIO2\Web\obj\Debug\net9.0\rjsmcshtml.dswa.cache.json
 C:\Users\OBERDAN\Desktop\DESAFIO2\Web\obj\Debug\net9.0\scopedcss\Pages\Shared\_Layout.cshtml.rz.scp.css
 C:\Users\OBERDAN\Desktop\DESAFIO2\Web\obj\Debug\net9.0\scopedcss\bundle\Web.styles.css
 C:\Users\OBERDAN\Desktop\DESAFIO2\Web\obj\Debug\net9.0\scopedcss\projectbundle\Web.bundle.scp.css
-C:\Users\OBERDAN\Desktop\DESAFIO2\Web\obj\Debug\net9.0\compressed\f61f1xnw7n-b9sayid5wm.gz
+C:\Users\OBERDAN\Desktop\DESAFIO2\Web\obj\Debug\net9.0\compressed\f61f1xnw7n-wots31hw31.gz
 C:\Users\OBERDAN\Desktop\DESAFIO2\Web\obj\Debug\net9.0\compressed\ds8f6vp0dx-61n19gt1b8.gz
 C:\Users\OBERDAN\Desktop\DESAFIO2\Web\obj\Debug\net9.0\compressed\2wck7lvexw-xtxxf3hu2r.gz
 C:\Users\OBERDAN\Desktop\DESAFIO2\Web\obj\Debug\net9.0\compressed\7ygf986cjc-bqjiyaj88i.gz
@@ -112,4 +113,3 @@ C:\Users\OBERDAN\Desktop\DESAFIO2\Web\obj\Debug\net9.0\refint\Web.dll
 C:\Users\OBERDAN\Desktop\DESAFIO2\Web\obj\Debug\net9.0\Web.pdb
 C:\Users\OBERDAN\Desktop\DESAFIO2\Web\obj\Debug\net9.0\Web.genruntimeconfig.cache
 C:\Users\OBERDAN\Desktop\DESAFIO2\Web\obj\Debug\net9.0\ref\Web.dll
-C:\Users\OBERDAN\Desktop\DESAFIO2\Web\obj\Debug\net9.0\Web.sourcelink.json

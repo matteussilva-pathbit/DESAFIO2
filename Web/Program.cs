@@ -1,26 +1,36 @@
+using DESAFIO2.Web.Services;
+using DESAFIO2.Web.State;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddRazorPages();
+
+builder.Services
+    .AddRazorPages()
+    .AddRazorPagesOptions(o =>
+    {
+        // <- muda a raiz padrão de /Pages para /Cadastro
+        o.RootDirectory = "/Cadastro";
+    });
+
+builder.Services.AddHttpClient<WebApiClient>();
+builder.Services.AddScoped<CadastroState>();
+builder.Services.AddCors(p => p.AddDefaultPolicy(b => b
+.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
+
+
 
 var app = builder.Build();
+app.UseCors();
 
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
 }
 
-app.UseHttpsRedirection();
-
+app.UseStaticFiles();
 app.UseRouting();
 
-app.UseAuthorization();
-
-app.MapStaticAssets();
-app.MapRazorPages()
-   .WithStaticAssets();
+// Mapeia Razor Pages
+app.MapRazorPages();
 
 app.Run();

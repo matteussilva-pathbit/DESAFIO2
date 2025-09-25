@@ -1,0 +1,29 @@
+@page "/Cadastro/P2Financeiros"
+@model DESAFIO2.Web.Cadastro.P2FinanceirosModel
+
+<h2>Dados financeiros</h2>
+
+<form method="post">
+  <div class="row">
+    <label>Renda
+      <input type="number" step="0.01" name="Renda" value="@Model.Renda" min="0" required onchange="nonNegative(this)" />
+    </label>
+    <label>Patrimônio
+      <input type="number" step="0.01" name="Patrimonio" value="@Model.Patrimonio" min="0" required onchange="nonNegative(this)" />
+    </label>
+  </div>
+
+  <div class="actions">
+    <button type="submit">Próximo</button>
+    <a href="/Cadastro/P1Basicos">Voltar</a>
+  </div>
+</form>
+
+@section Scripts {
+<script>
+function nonNegative(el){
+  const v = parseFloat(el.value || '0');
+  el.setCustomValidity(v >= 0 ? '' : 'Valor não pode ser negativo');
+}
+</script>
+}

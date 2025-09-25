@@ -1,0 +1,67 @@
+@page "/Cadastro/P3Endereco"
+@model DESAFIO2.Web.Cadastro.P3EnderecoModel
+
+<h2>Endereço</h2>
+
+<form method="post" id="formEndereco">
+  <label>CEP
+    <input id="cep" name="Cep" value="@Model.Cep" placeholder="Somente números" required onchange="onCepChange(this)" />
+  </label>
+
+  <label>Rua
+    <input id="rua" name="Rua" value="@Model.Rua" required />
+  </label>
+
+  <label>Número
+    <input name="Numero" value="@Model.Numero" required />
+  </label>
+
+  <label>Bairro
+    <input id="bairro" name="Bairro" value="@Model.Bairro" required />
+  </label>
+
+  <div class="row">
+    <label>Cidade
+      <input id="cidade" name="Cidade" value="@Model.Cidade" required />
+    </label>
+    <label>Estado
+      <input id="estado" name="Estado" value="@Model.Estado" maxlength="2" required />
+    </label>
+  </div>
+
+  <div class="actions">
+    <button type="submit">Próximo</button>
+    <a href="/Cadastro/P2Financeiros">Voltar</a>
+  </div>
+</form>
+
+@section Scripts {
+<script>
+// util: só dígitos
+function onlyDigits(input) {
+  input.value = (input.value || '').replace(/\D/g,'');
+}
+// CEP: 8 dígitos + busca na API
+async function onCepChange(el) {
+  onlyDigits(el);
+  if (el.value.length !== 8) {
+    el.setCustomValidity('CEP deve ter 8 dígitos');
+    return;
+  }
+  el.setCustomValidity('');
+
+  const url = `http://localhost:5157/api/cep/${el.value}`; // ajuste a porta da sua API se necessário
+  try {
+    const resp = await fetch(url);
+    if (!resp.ok) return;
+    const end = await resp.json();
+    document.getElementById('rua').value    = end.rua    || '';
+    document.getElementById('bairro').value = end.bairro || '';
+    document.getElementById('cidade').value = end.cidade || '';
+    document.getElementById('estado').value = end.estado || '';
+  } catch (err) {
+    console.error('Falha ao buscar CEP', err);
+  }
+}
+</script>
+}
